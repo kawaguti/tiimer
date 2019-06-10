@@ -1,0 +1,144 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <p style="Font-Size: 20vw; Margin: 15vh 2vw 0">
+    {{ remainedString }}
+  </p>
+  <form>
+    <div class="form-group">
+      <input type="text" style="width: 2em" class="form-control" id="minInput" #minInput required>
+      :
+      <input type="text" style="width: 2em" class="form-control" id="secInput" #secInput required>
+    <button type="submit" class="btn btn-primary"
+            (click)="broadcastTime(minInput.value, secInput.value);minInput.value='';secInput.value='';beepFlag=true;">Set
+    </button>
+    </div>
+  </form>
+  <button class="btn btn-secondary" (click)="newWindow()">Open a new Window</button>
+  <button class="btn btn-secondary" (click)="beepFlag = false; broadcastMessage('beepOff');">BeepOff</button>
+
+  <div style="display: none;">
+  <p>
+    Elapesed: {{ elapsedSec }}
+  </p>
+  <p>
+    Remained: {{ remainedSec }}
+  </p>
+  <p>
+    Target: {{ targetSec }}
+  </p>
+  </div>
+  <p style="display: none;">
+    {{ now | async | date:'yyyy年MM月dd日 HH:mm:ss' }}
+  </p>
+</div>
+
+<div class="container" style="display: none;">
+    <div class="header clearfix">
+      <nav>
+        <ul class="nav nav-pills float-right">
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/Nolanus/ngx-multi-window">Github</a>
+          </li>
+        </ul>
+      </nav>
+      <h3 class="text-muted">Angular Multi-Window</h3>
+    </div>
+
+    <div class="jumbotron">
+      <h1 class="display-3">Talking Tabs!</h1>
+      <p class="lead">Cross-Window/Tab communcation in angular for multi-window applications.</p>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Communication Log</h3>
+      </div>
+      <div class="col-12 logc">
+        <div *ngFor="let log of logs; let i = index" class="alert alert-primary fade show" role="alert">
+          {{ log }}
+          <button type="button" class="close" aria-label="Close" (click)="removeLogMessage(i)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="alert alert-light" role="alert" *ngIf="!logs.length">
+          No communication so far. Open a new window and start sending messages!
+        </div>
+      </div>
+    </div>
+
+    <div class="row marketing">
+      <div class="col-12">
+        <h3>Current Window</h3>
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="windowIdInput">ID</label>
+              <input type="text" readonly class="form-control-plaintext" [value]="ownId" id="windowIdInput"
+                     name="windowIdInput"/>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="windowNameInput">Name</label>
+              <input type="text" class="form-control" id="windowNameInput" name="windowNameInput" [(ngModel)]="newName"
+                     required>
+              <button type="submit" class="btn btn-primary" [disabled]="newName === ownName" (click)="changeName();">
+                Change name
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <h3>Registered Windows</h3>
+        <p class="text-muted">The list of known windows will be refreshed on regular basis.</p>
+        <p>
+          <button class="btn btn-secondary" (click)="newWindow()">Open a new Window</button>
+        </p>
+        <div class="list-group">
+          <a *ngFor="let window of windows;" (click)="recipientInput.value = window.id"
+             [class.list-group-item-warning]="window.stalled" [class.list-group-item-primary]="window.self"
+             class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ window.name }}</h5>
+              <small>ID: {{ window.id }}</small>
+            </div>
+            <small class="mb-1">
+              <span *ngIf="window.self">Current window</span>
+              <span *ngIf="!window.self">Other window</span>,
+              Status:
+              <span *ngIf="window.stalled">Stalled</span>
+              <span *ngIf="!window.stalled">Active</span>
+            </small>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <h3>Send Message</h3>
+        <form>
+          <div class="form-group">
+            <label for="recipientInput">Recipient Window Id</label>
+            <input type="text" class="form-control" id="recipientInput" #recipientInput required readonly>
+            <small id="recipientInputHelp" class="form-text text-muted">Select a window from the list of known windows
+            </small>
+          </div>
+          <div class="form-group">
+            <label for="messageInput">Message</label>
+            <input type="text" class="form-control" id="messageInput" #messageInput required>
+          </div>
+          <button type="submit" class="btn btn-primary"
+                  (click)="sendMessage(recipientInput.value, messageInput.value);">Submit
+          </button>
+          <button type="submit" class="btn btn-primary"
+                  (click)="broadcastMessage(messageInput.value);">Broadcast
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>Angular Multi-Window library demo application</p>
+    </footer>
+
+</div> <!-- /container -->
