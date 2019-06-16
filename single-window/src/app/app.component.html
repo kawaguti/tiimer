@@ -9,4 +9,14 @@
   <p style="Font-Size: 20vw; Margin: 15vh 2vw 0">
     {{ remainedString }}
   </p>
+  <form>
+    <div class="form-group">
+      <input type="text" style="width: 2em" class="form-control" id="minInput" #minInput required>
+      :
+      <input type="text" style="width: 2em" class="form-control" id="secInput" #secInput required>
+      <button type="submit" class="btn btn-primary"
+              (click)="setNewTime(minInput.value, secInput.value);minInput.value='';secInput.value='';">Set
+      </button>
+    </div>
+  </form>
 </div>

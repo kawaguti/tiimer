@@ -48,4 +48,15 @@ export class AppComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+  setNewTime(min: string, sec: string) {
+    const minNumber = ( parseInt(min) ? parseInt(min) : 0 );
+    const secNumber = ( parseInt(sec) ? parseInt(sec) : 0 );
+    const newsec = minNumber * 60 + secNumber + 1;
+    if ( newsec > 0 && newsec < 60 * 60 ) {
+      this.targetSec = newsec;
+      this.elapsedSec = 0;
+      this.remainedSec = newsec;
+    }
+  }
 }
