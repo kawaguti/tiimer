@@ -74,4 +74,8 @@ export class AppComponent implements OnInit, OnDestroy {
       this.beepCount = 10;
     }
   }
+
+  windowOpen() {
+    window.open('index.html');
+  }
 }
