@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'single-window';
+  title = 'electron-angular';
 
   now: Observable<Date>;
   intervalList = [];
