@@ -8,7 +8,7 @@ import { MultiWindowService, KnownAppWindow, Message } from 'ngx-multi-window';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'electron-angular';
+  title = 'tiimer.net';
 
   now: Observable<Date>;
   intervalList = [];
@@ -31,6 +31,13 @@ export class AppComponent implements OnInit, OnDestroy {
         const newSec: string = match[1];
         this.setNewTime ( '', newSec, true);
       }
+
+      const matchTitle = value.data.match(/^setTitle (.*)$/);
+      if (matchTitle) {
+        const newTitle: string = matchTitle[1];
+        this.setTitle(newTitle, true);
+      }
+
     });
   }
 
@@ -115,5 +122,12 @@ export class AppComponent implements OnInit, OnDestroy {
       () => {
         console.log('Message successfully delivered');
       });
+  }
+
+  setTitle(title: string, noBroadcast: boolean = false) {
+    this.title = title;
+    if (noBroadcast === false) {
+      this.broadcastMessage('setTitle ' + title);
+    }
   }
 }

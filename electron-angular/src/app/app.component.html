@@ -1,26 +1,26 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <p>
-    {{ now | async | date:'yyyy年MM月dd日 HH:mm:ss' }}
-  </p>
-  <p style="Font-Size: 20vw; Margin: 15vh 2vw 0">
+<div style="text-align:center;">
+  <h2 class="title">
+    {{ title }}
+  </h2>
+  <p class="remain">
     {{ remainedString }}
   </p>
   <form>
     <div class="form-group">
-      <input type="text" style="width: 2em" class="form-control" id="minInput" #minInput required>
+      <input type="text" style="width: 10em" id="titleInput" value="{{ title }}" #titleInput required>
+      ||
+      <input type="text" style="width: 2em" id="minInput" #minInput>
       :
-      <input type="text" style="width: 2em" class="form-control" id="secInput" #secInput required>
-      <button type="submit" class="btn btn-primary"
-              (click)="setNewTime(minInput.value, secInput.value);minInput.value='';secInput.value='';">Set
+      <input type="text" style="width: 2em" id="secInput" #secInput required>
+      <button type="submit"
+              (click)="setNewTime(minInput.value, secInput.value);setTitle(titleInput.value);minInput.value='';secInput.value='';">Set
       </button>
     </div>
   </form>
-  <button class="btn btn-secondary" (click)="beepCount = 0; ">BeepOff</button>
-  <button class="btn btn-secondary" (click)="windowOpen(); ">A new Window open</button>
-  <button class="btn btn-secondary" (click)="broadcastMessage('hi'); ">Send hi Message</button>
-
+  <button (click)="windowOpen(); ">A new Window open</button>
+  <button (click)="beepCount = 0; ">Beep off</button>
+  <p>
+    {{ now | async | date:'yyyy/MM/dd HH:mm:ss' }}
+  </p>
 </div>
