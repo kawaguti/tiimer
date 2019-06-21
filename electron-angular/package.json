@@ -10,6 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "ng build --extraWebpackConfig webpack.extra.js && electron .",
+    "electron-prod": "ng build --prod --extraWebpackConfig webpack.extra.js && electron .",
     "package": "electron-packager ."
   },
   "private": true,
