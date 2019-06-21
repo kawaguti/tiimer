@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   remainedSec: number;
   remainedString: string;
 
-  beepCount: number;
+  beepCount: number = 1;
 
   windows: KnownAppWindow[] = [];
 
@@ -54,7 +54,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this.remainedString = '00:00';
-    const newSec = 0;
 
     this.multiWindowService.onWindows().subscribe(knownWindows => {
       this.windows = knownWindows;
