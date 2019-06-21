@@ -19,7 +19,7 @@
     </div>
   </form>
   <button (click)="windowOpen(); ">A new Window open</button>
-  <button (click)="beepCount = 0; ">Beep off</button>
+  <button (click)="beepOff();">Beep off</button>
   <p>
     {{ now | async | date:'yyyy/MM/dd HH:mm:ss' }}
   </p>

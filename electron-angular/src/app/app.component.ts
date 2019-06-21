@@ -38,6 +38,10 @@ export class AppComponent implements OnInit, OnDestroy {
         this.setTitle(newTitle, false);
       }
 
+      if (value.data === 'beepOff' ) {
+        this.beepOff(false);
+      }
+
     });
   }
 
@@ -91,9 +95,10 @@ export class AppComponent implements OnInit, OnDestroy {
       this.targetSec = newSec + 1;
       this.elapsedSec = 0;
       this.remainedSec = newSec + 1;
-      this.beepCount = 10;
 
       if (isMainWindow === true) {
+        this.beepCount = 10;
+
         const broadcastSec = newSec - 1;
         this.broadcastMessage('setTime ' + broadcastSec.toString());
       }
@@ -129,6 +134,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.title = title;
     if (isMainWindow === true) {
       this.broadcastMessage('setTitle ' + title);
+    }
+  }
+
+  beepOff( isMainWindow: boolean = true) {
+    this.beepCount = 0;
+    if (isMainWindow === true) {
+      this.broadcastMessage('beepOff');
     }
   }
 }
