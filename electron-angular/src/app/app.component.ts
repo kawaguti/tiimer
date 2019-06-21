@@ -49,6 +49,11 @@ export class AppComponent implements OnInit, OnDestroy {
       this.elapsedSec = 0;
       this.remainedSec = newSec;
     }
+
+    this.multiWindowService.onWindows().subscribe(knownWindows => {
+      this.windows = knownWindows;
+    });
+
     this.now = new Observable((observer) => {
       this.intervalList.push(setInterval(() => {
         if ( this.targetSec > 0 && this.remainedSec > 0) {
@@ -97,7 +102,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   broadcastMessage( message: string ) {
-    this.windows = this.multiWindowService.getKnownWindows();
     for ( const window of this.windows ) {
       if (window.id !== this.multiWindowService.id ) {
         this.sendMessage(window.id, message );
