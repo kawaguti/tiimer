@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import {MultiWindowService} from 'ngx-multi-window';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,7 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   beepCount: number;
 
-  constructor() {
+  constructor(private multiWindowService: MultiWindowService) {
   }
 
   public static beep() {
