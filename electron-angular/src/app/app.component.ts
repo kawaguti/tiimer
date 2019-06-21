@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import {MultiWindowService} from 'ngx-multi-window';
+import { MultiWindowService, Message } from 'ngx-multi-window';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +21,9 @@ export class AppComponent implements OnInit, OnDestroy {
   beepCount: number;
 
   constructor(private multiWindowService: MultiWindowService) {
+    multiWindowService.onMessage().subscribe((value: Message) => {
+      console.log('Received a message from ' + value.senderId + ': ' + value.data);
+    });
   }
 
   public static beep() {
