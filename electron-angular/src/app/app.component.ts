@@ -29,13 +29,13 @@ export class AppComponent implements OnInit, OnDestroy {
       const match = value.data.match(/^setTime (\d+)$/);
       if (match) {
         const newSec: string = match[1];
-        this.setNewTime ( '', newSec, true);
+        this.setNewTime ( '', newSec, false);
       }
 
       const matchTitle = value.data.match(/^setTitle (.*)$/);
       if (matchTitle) {
         const newTitle: string = matchTitle[1];
-        this.setTitle(newTitle, true);
+        this.setTitle(newTitle, false);
       }
 
     });
@@ -83,7 +83,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  setNewTime(min: string, sec: string, noBroadcast: boolean = false) {
+  setNewTime(min: string, sec: string, isMainWindow: boolean = true) {
     const minNumber = ( parseInt(min, 10) ? parseInt(min, 10) : 0 );
     const secNumber = ( parseInt(sec, 10) ? parseInt(sec, 10) : 0 );
     const newSec = minNumber * 60 + secNumber;
@@ -93,7 +93,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.remainedSec = newSec + 1;
       this.beepCount = 10;
 
-      if (noBroadcast === false) {
+      if (isMainWindow === true) {
         const broadcastSec = newSec - 1;
         this.broadcastMessage('setTime ' + broadcastSec.toString());
       }
@@ -125,9 +125,9 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
-  setTitle(title: string, noBroadcast: boolean = false) {
+  setTitle(title: string, isMainWindow: boolean = true) {
     this.title = title;
-    if (noBroadcast === false) {
+    if (isMainWindow === true) {
       this.broadcastMessage('setTitle ' + title);
     }
   }
