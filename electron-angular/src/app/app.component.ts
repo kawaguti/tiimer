@@ -94,7 +94,8 @@ export class AppComponent implements OnInit, OnDestroy {
       this.beepCount = 10;
 
       if (noBroadcast === false) {
-        this.broadcastMessage('setTime ' + newSec.toString());
+        const broadcastSec = newSec - 1;
+        this.broadcastMessage('setTime ' + broadcastSec.toString());
       }
     }
   }
