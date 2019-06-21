@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { MultiWindowService, Message } from 'ngx-multi-window';
+import { MultiWindowService, KnownAppWindow, Message } from 'ngx-multi-window';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +19,8 @@ export class AppComponent implements OnInit, OnDestroy {
   remainedString: string;
 
   beepCount: number;
+
+  windows: KnownAppWindow[] = [];
 
   constructor(private multiWindowService: MultiWindowService) {
     multiWindowService.onMessage().subscribe((value: Message) => {
@@ -82,5 +84,27 @@ export class AppComponent implements OnInit, OnDestroy {
 
   windowOpen() {
     window.open('index.html');
+  }
+
+  broadcastMessage( message: string ){
+    this.windows = this.multiWindowService.getKnownWindows();
+    for ( const window of this.windows ) {
+      if (window.id !== this.multiWindowService.id ) {
+        this.sendMessage(window.id, message );
+      }
+    }
+  }
+
+  sendMessage(recipientId: string, message: string ) {
+    this.multiWindowService.sendMessage(recipientId, 'customEvent', message).subscribe(
+      (messageId: string) => {
+        console.log('Message send, ID is ' + messageId);
+      },
+      (error) => {
+        console.log('Message sending failed, error: ' + error);
+      },
+      () => {
+        console.log('Message successfully delivered');
+      });
   }
 }
