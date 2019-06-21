@@ -37,11 +37,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this.remainedString = '00:00';
-    const newsec = 180;
-    if ( newsec > 0 && newsec < 60 * 60 ) {
-      this.targetSec = newsec;
+    const newSec = 180;
+    if ( newSec > 0 && newSec < 60 * 60 ) {
+      this.targetSec = newSec;
       this.elapsedSec = 0;
-      this.remainedSec = newsec;
+      this.remainedSec = newSec;
     }
     this.now = new Observable((observer) => {
       this.intervalList.push(setInterval(() => {
@@ -71,8 +71,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   setNewTime(min: string, sec: string) {
-    const minNumber = ( parseInt(min) ? parseInt(min) : 0 );
-    const secNumber = ( parseInt(sec) ? parseInt(sec) : 0 );
+    const minNumber = ( parseInt(min, 10) ? parseInt(min, 10) : 0 );
+    const secNumber = ( parseInt(sec, 10) ? parseInt(sec, 10) : 0 );
     const newsec = minNumber * 60 + secNumber + 1;
     if ( newsec > 0 && newsec < 60 * 60 ) {
       this.targetSec = newsec;
@@ -86,7 +86,7 @@ export class AppComponent implements OnInit, OnDestroy {
     window.open('index.html');
   }
 
-  broadcastMessage( message: string ){
+  broadcastMessage( message: string ) {
     this.windows = this.multiWindowService.getKnownWindows();
     for ( const window of this.windows ) {
       if (window.id !== this.multiWindowService.id ) {
