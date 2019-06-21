@@ -43,12 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this.remainedString = '00:00';
-    const newSec = 180;
-    if ( newSec > 0 && newSec < 60 * 60 ) {
-      this.targetSec = newSec;
-      this.elapsedSec = 0;
-      this.remainedSec = newSec;
-    }
+    const newSec = 0;
 
     this.multiWindowService.onWindows().subscribe(knownWindows => {
       this.windows = knownWindows;
