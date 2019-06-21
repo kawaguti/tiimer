@@ -25,6 +25,12 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private multiWindowService: MultiWindowService) {
     multiWindowService.onMessage().subscribe((value: Message) => {
       console.log('Received a message from ' + value.senderId + ': ' + value.data);
+
+      const match = value.data.match(/^setTime (\d+)$/);
+      if (match) {
+        const newSec: string = match[1];
+        this.setNewTime ( '', newSec, true);
+      }
     });
   }
 
@@ -70,15 +76,19 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  setNewTime(min: string, sec: string) {
+  setNewTime(min: string, sec: string, noBroadcast: boolean = false) {
     const minNumber = ( parseInt(min, 10) ? parseInt(min, 10) : 0 );
     const secNumber = ( parseInt(sec, 10) ? parseInt(sec, 10) : 0 );
-    const newsec = minNumber * 60 + secNumber + 1;
-    if ( newsec > 0 && newsec < 60 * 60 ) {
-      this.targetSec = newsec;
+    const newSec = minNumber * 60 + secNumber;
+    if ( newSec > 0 && newSec < 60 * 60 ) {
+      this.targetSec = newSec + 1;
       this.elapsedSec = 0;
-      this.remainedSec = newsec;
+      this.remainedSec = newSec + 1;
       this.beepCount = 10;
+
+      if (noBroadcast === false) {
+        this.broadcastMessage('setTime ' + newSec.toString());
+      }
     }
   }
 
