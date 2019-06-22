@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /tiimer-darwin-x64
+/tiimer-win32-x64
 # Only exists if Bazel was run
 /bazel-out
 
