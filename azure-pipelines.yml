@@ -1,0 +1,14 @@
+trigger:
+  - master
+
+pool:
+  vmImage: 'windows-2019'
+
+steps:
+  - task: AzureFileCopy@3
+    inputs:
+      SourcePath: '$(Build.Repository.LocalPath)\electron-angular\dist\electron-angular'
+      azureSubscription: 'angular-tutorial'
+      Destination: 'AzureBlob'
+      storage: 'tiimer'
+      ContainerName: '$web'
